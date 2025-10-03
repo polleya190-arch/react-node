@@ -19,6 +19,7 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientBuildPath = path.join(__dirname, "../client/build");
+const PORT = process.env.PORT || 5000;
 app.use(express.static(clientBuildPath));
 
 // API Routes
@@ -35,6 +36,6 @@ mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("✅ MongoDB Connected");
-    app.listen(5000, () => console.log("🚀 Server running on port 5000"));
+    app.listen(PORT, () => console.log("🚀 Server running on port 5000"));
   })
   .catch((err) => console.log("❌ Error:", err));
