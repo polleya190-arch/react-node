@@ -16,7 +16,7 @@ function AddSalary({ userId, onAdded }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+  <form className="stylish-form" onSubmit={handleSubmit}>
       <h2>Add Salary</h2>
       <input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} required />
       <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />

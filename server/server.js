@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 
 import salaryRoutes from "./routes/salaryRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -19,6 +20,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// User registration/login routes
+app.use("/api/user", userRoutes);
 
 // Serve React build in production
 const __filename = fileURLToPath(import.meta.url);

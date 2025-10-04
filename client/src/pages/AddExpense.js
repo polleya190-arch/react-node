@@ -18,7 +18,7 @@ function AddExpense({ userId, onAdded }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+  <form className="stylish-form" onSubmit={handleSubmit}>
       <h2>Add Expense</h2>
       <input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} required />
       <input type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} />
