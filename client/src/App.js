@@ -153,6 +153,7 @@ function App() {
           )}
         </nav>
         <Routes>
+          <Route path="/" element={userId ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login onLoggedIn={id => { setUserId(id); }} />} />
           <Route path="/register" element={<Register onRegistered={() => window.location.replace('/login')} />} />
           <Route path="/dashboard" element={userId ? (
