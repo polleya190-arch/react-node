@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { registerUser } from "../services/api";
 
 export default function Register({ onRegistered }) {
   const [username, setUsername] = useState("");
@@ -11,7 +11,7 @@ export default function Register({ onRegistered }) {
     e.preventDefault();
     setError("");
     try {
-      await axios.post("/api/user/register", { username, email, password });
+  await registerUser({ username, email, password });
       alert("Registration successful! Please login.");
       onRegistered();
     } catch (err) {

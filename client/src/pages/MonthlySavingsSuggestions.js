@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { getGeminiSuggestions } from "../services/api";
 
 export default function MonthlySavingsSuggestions({ monthlyData }) {
   const [suggestions, setSuggestions] = useState({});
@@ -27,7 +27,7 @@ export default function MonthlySavingsSuggestions({ monthlyData }) {
       }));
       const transactions = window.transactions || [];
 
-      const res = await axios.post("/api/gemini-suggestions", {
+      const res = await getGeminiSuggestions({
         salaryHistory,
         monthlySummary,
         transactions
