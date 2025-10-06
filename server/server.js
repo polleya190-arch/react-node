@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 
 import salaryRoutes from "./routes/salaryRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
+import geminiRoutes from "./routes/geminiRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(express.static(clientBuildPath));
 // API Routes
 app.use("/api/salary", salaryRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api", geminiRoutes);
 
 // Catch-all route for React (must be last)
 app.get(/^(?!\/api\/).*/, (req, res) => {

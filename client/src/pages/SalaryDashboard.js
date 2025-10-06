@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import AddSalary from "./AddSalary";
 import AddExpense from "./AddExpense";
+import MonthlySavingsSuggestions from "./MonthlySavingsSuggestions";
 import "./../styles/SalaryDashboard.css";
 
 function SalaryDashboard({ userId }) {
@@ -18,6 +19,7 @@ function SalaryDashboard({ userId }) {
   // State declarations (must be at the top)
   const [history, setHistory] = useState([]);
   const [summaryData, setSummaryData] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   // 1️⃣ Fetch all dashboard data
   useEffect(() => {
@@ -26,6 +28,8 @@ function SalaryDashboard({ userId }) {
         const salaryRes = await getSalaryHistory(userId);
         setHistory(salaryRes.data);
         const summaryRes = await getMonthlySummary(userId);
+        const txRes = await getTransactions(userId);
+        setTransactions(txRes.data);
         const formatted = [];
         summaryRes.data.forEach((item) => {
           const key = `${item._id.month}-${item._id.year}`;
@@ -53,6 +57,31 @@ function SalaryDashboard({ userId }) {
     Expenses: item.expenses,
     Savings: item.savings,
   }));
+
+  // Prepare monthlyData for AI suggestions
+  const monthlyData = summaryData.map((item) => {
+    const [month, year] = item.name.split("-");
+    const expenseBreakdown = {};
+    transactions.forEach((t) => {
+      const tDate = new Date(t.date);
+      if (
+        t.type === "debit" &&
+        tDate.getMonth() + 1 === Number(month) &&
+        tDate.getFullYear() === Number(year)
+      ) {
+        const cat = t.description || "Other";
+        expenseBreakdown[cat] = (expenseBreakdown[cat] || 0) + t.amount;
+      }
+    });
+    return {
+      key: item.name,
+      label: item.name,
+      salary: item.salary,
+      expenses: item.expenses,
+      savings: item.savings,
+      expenseBreakdown,
+    };
+  });
 
   return (
     <div className="stylish-container">
@@ -103,6 +132,9 @@ function SalaryDashboard({ userId }) {
           <p>No data available for chart.</p>
         )}
       </section>
+
+      {/* AI Savings Suggestions Monthly */}
+      <MonthlySavingsSuggestions monthlyData={monthlyData} />
     </div>
   );
 }
