@@ -24,7 +24,7 @@ export default function Login({ onLoggedIn }) {
 
   return (
   <form className="stylish-form" onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <h2>Loginww</h2>
       <input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} required />
       <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} required />
       <button type="submit">Login</button>
