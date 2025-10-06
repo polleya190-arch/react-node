@@ -1,6 +1,10 @@
 import axios from "axios";
-const backendUrl = "https://salary-expense-tracker-backend.vercel.app/";
-const API = axios.create({ baseURL: backendUrl + "api" });
+
+const API = axios.create({ baseURL: process.env.REACT_APP_API_URL + "api" });
+
+// ===== User Auth =====
+export const registerUser = (data) => API.post("/user/register", data);
+export const loginUser = (data) => API.post("/user/login", data);
 
 // ===== Salary =====
 export const addSalary = (data) => API.post("/salary", data);
